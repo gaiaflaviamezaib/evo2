@@ -85,7 +85,7 @@ def _score_sequences(
 
     # Without a BOS token the first nucleotide is not predicted, so a sequence of
     # length L has L - 1 logprobs. Slicing further would include padding tokens.
-    n_scored = [ seq_length - 1 + int(prepend_bos) for seq_length in seq_lengths ]
+    n_scored = [ max(0, seq_length - 1 + int(prepend_bos)) for seq_length in seq_lengths ]
 
     return [
         reduce_func(logprobs[idx][:n_scored[idx]])
